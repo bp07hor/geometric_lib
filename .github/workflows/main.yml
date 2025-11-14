@@ -9,7 +9,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest]
-        python-version: ['3.8', '3.9', '3.10']
+        python-version: ['3.9', '3.10']
     
     runs-on: ${{ matrix.os }}
     
@@ -23,7 +23,12 @@ jobs:
         python-version: ${{ matrix.python-version }}
     
     - name: List files (for debugging)
-      run: ls -la
+      run: |
+        if [[ "${{ matrix.os }}" == "windows-latest" ]]; then
+          dir
+        else
+          ls -la
+        fi
     
     - name: Run unit tests
       run: |
