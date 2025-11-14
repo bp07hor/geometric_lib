@@ -22,13 +22,13 @@ jobs:
       with:
         python-version: ${{ matrix.python-version }}
     
-    - name: List files (for debugging)
-      run: |
-        if [[ "${{ matrix.os }}" == "windows-latest" ]]; then
-          dir
-        else
-          ls -la
-        fi
+    - name: List files on Linux
+      if: matrix.os == 'ubuntu-latest'
+      run: ls -la
+    
+    - name: List files on Windows
+      if: matrix.os == 'windows-latest'
+      run: dir
     
     - name: Run unit tests
       run: |
