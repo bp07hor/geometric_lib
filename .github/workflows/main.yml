@@ -2,14 +2,14 @@ name: Run Unit Tests
 
 on:
   push:
-    branches: [ main, master ]
+    branches: [ main ]
 
 jobs:
   test:
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest]
-        python-version: ['3.10', '3.11']
+        python-version: ['3.8', '3.9', '3.10']
     
     runs-on: ${{ matrix.os }}
     
@@ -22,6 +22,9 @@ jobs:
       with:
         python-version: ${{ matrix.python-version }}
     
+    - name: List files (for debugging)
+      run: ls -la
+    
     - name: Run unit tests
       run: |
-        python -m unittest test_circle.py test_rectangle.py test_square.py test_triangle.py -v
+        python -m unittest discover -p "test_*.py" -v
